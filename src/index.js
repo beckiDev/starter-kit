@@ -1,5 +1,17 @@
 import './index.css';
-import numeral from 'numeral';
+import {getUsers} from './api/userApi';
+ //populate users via API call
 
-const courseValue = numeral(1000).format('$0,00.00');
-console.log(`I would pay ${courseValue} for this course`);  
+ getUsers().then(result => {
+   let usersBody = '';
+
+   result.forEach(user => {
+     usersBody+= `<tr>
+      <td>${user.id}</td>
+      <td>${user.firstName}</td>
+      <td>${user.lastName}</td>
+      <td>${user.email}</td>
+     </tr>`
+   });
+   global.document.getElementById('users').innerHTML = usersBody;
+ })
